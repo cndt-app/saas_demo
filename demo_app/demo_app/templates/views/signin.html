@@ -1,0 +1,32 @@
+{% extends 'components/base.html' %}
+
+{% block content %}
+<form class="space-y-3 max-w-[480px]" action="#" method="POST">
+    <div>
+        <label for="token" class="block text-sm/6 font-medium text-gray-900">Token</label>
+        <div class="relative mt-2 rounded-md shadow-sm">
+            <input
+                type="text"
+                name="token"
+                id="token"
+                class="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6"
+                placeholder="token"
+                required
+            >
+        </div>
+    </div>
+
+    <div class="flex items-center justify-between">
+        <div>
+            <a href="https://app.getconduit.app/auth/app_token/" class="text-indigo-600 hover:underline cursor-pointer">Get your app token</a>
+        </div>
+
+        <button
+            type="submit"
+            class="flex w-[90px] justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+        >
+            Sign in
+        </button>
+    </div>
+</form>
+{% endblock %}
