@@ -18,7 +18,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'middleware.ErrorMiddleware',
+    'demo_app.middleware.ErrorMiddleware',
 ]
 
 ROOT_URLCONF = 'demo_app.urls'
