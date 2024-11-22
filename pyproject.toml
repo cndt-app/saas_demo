@@ -3,7 +3,7 @@ name = "saas-demo-dashboards"
 version = "0.1.0"
 description = ""
 authors = ["dmitrii-sorokin-cndt <dmitrii@getconduit.app>"]
-readme = "README.md"
+package-mode = false
 
 [tool.poetry.dependencies]
 python = "^3.10"
