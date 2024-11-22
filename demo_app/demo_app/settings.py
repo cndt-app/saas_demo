@@ -6,9 +6,9 @@ BASE_DIR = PROJECT_DIR.parent
 
 SECRET_KEY = 'django-insecure-&ye_*si1htd3#_d#i(+7x2bcp_p$@_1b-ugz$g4*@z=iy^3opw'
 
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -17,7 +17,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 ]
 
-MIDDLEWARE = []
+MIDDLEWARE = [
+    'middleware.ErrorMiddleware',
+]
 
 ROOT_URLCONF = 'demo_app.urls'
 

@@ -1,7 +1,15 @@
 import requests
+from dataclasses import dataclass
 
 
 BASE_URL = 'https://api.getconduit.app/v2/'
+
+
+@dataclass
+class ConduitAPIError(Exception):
+    code: str
+    message: str
+    http_code: int
 
 
 def workspaces_list(token):
@@ -25,12 +33,35 @@ def dashboards_clone(token, dashboard_id, workspace_id):
 
 
 def _request(method, path, token, data=None):
-    res = requests.request(
-        method,
-        f'{BASE_URL}{path}',
-        headers={'Authorization': f'Bearer {token}'},
-        json=data,
-    )
-    res.raise_for_status()
+    try:
+        res = requests.request(
+            method,
+            f'{BASE_URL}{path}',
+            headers={'Authorization': f'Bearer {token}'},
+            json=data,
+        )
+    except requests.exceptions.RequestException as e:
+        raise ConduitAPIError(code='http_error', message=str(e), http_code=0) from e
+
+    try:
+        res.raise_for_status()
+    except requests.exceptions.HTTPError as e:
+        code = None
+        message = None
+
+        if e.response.status_code == 400:
+            data = e.response.json()
+            code = data['code']
+            message = data['message']
+
+        if e.response.status_code == 401:
+            code='auth'
+            message='Invalid token'
+
+        raise ConduitAPIError(
+            code=code or 'unknown',
+            message=message or str(e),
+            http_code=e.response.status_code,
+        ) from e
 
     return res.json()

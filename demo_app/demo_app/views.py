@@ -2,7 +2,7 @@ from django.shortcuts import redirect
 from django.views.generic import TemplateView, RedirectView, View
 from django.urls import reverse, reverse_lazy
 
-from . import conduit_api
+from demo_app import conduit_api
 
 
 class AuthMixin:
