@@ -87,7 +87,7 @@ class DashboardsView(AuthMixin, TemplateView):
     template_name = 'views/dashboards.html'
 
     def get_context_data(self, workspace_id, workspace_token, **kwargs):
-        master_dashboards = conduit_api.dashboards_list(self.request.auth_token)
+        org_dashboards = conduit_api.dashboards_list(self.request.auth_token)
         workspace_dashboards = conduit_api.dashboards_list(workspace_token)
 
         return {
@@ -95,7 +95,7 @@ class DashboardsView(AuthMixin, TemplateView):
             'nav_back': reverse('workspaces'),
             'workspace_id': workspace_id,
             'workspace_token': workspace_token,
-            'master_dashboards': master_dashboards,
+            'org_dashboards': org_dashboards,
             'workspace_dashboards': workspace_dashboards,
         }
 

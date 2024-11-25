@@ -18,9 +18,16 @@ class ServerHandler(BaseHTTPRequestHandler):
         # Parse the query parameters
         query_components = parse_qs(urlparse(self.path).query, keep_blank_values=True)
 
-        user_id = query_components['user_id'][0]
-        date_from = datetime.date.fromisoformat(query_components['date_from'][0])
-        date_to = datetime.date.fromisoformat(query_components['date_to'][0])
+        try:
+            user_id = query_components['user_id'][0]
+            date_from = datetime.date.fromisoformat(query_components['date_from'][0])
+            date_to = datetime.date.fromisoformat(query_components['date_to'][0])
+        except KeyError as e:
+            self._send_error(f'Missing required parameter: {e}')
+            return
+        except ValueError as e:
+            self._send_error(f'Invalid date format: {e}')
+            return
 
         # Create CSV content
         buff = StringIO()
@@ -50,6 +57,11 @@ class ServerHandler(BaseHTTPRequestHandler):
 
         # Send CSV content as response
         self.wfile.write(buff.read().encode('utf-8'))
+
+    def _send_error(self, message):
+        self.send_response(400)
+        self.end_headers()
+        self.wfile.write(message.encode('utf-8'))
 
 
 def run():
